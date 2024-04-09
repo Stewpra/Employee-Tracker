@@ -84,4 +84,26 @@ class queries {
   }
 
   // Update employee role
+  static async updateEmployeeRole(employee, title) {
+    const [firstName, lastName] = employee.split(' ');
+    const id = await this.executeQuery(
+      `SELECT id FROM employee WHERE first_name = $1 AND last_name = $2;`,
+      [firstName, lastName]
+    );
+    const roleId = await this.executeQuery(
+      `SELECT id FROM role WHERE title = $1;`,
+      [title]
+    );
+    return this.executeQuery(
+      `
+          UPDATE 
+            employee 
+          SET 
+            role_id = $1 
+          WHERE id = $2;`,
+      [roleId, id]
+    );
+  }
 }
+
+module.exports = queries;
