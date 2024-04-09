@@ -46,6 +46,11 @@ class queries {
   }
 
   // Add department
+  static async addDepartment(name) {
+    return this.executeQuery(`INSERT INTO department (name) VALUES ($1);`, [
+      name,
+    ]);
+  }
 
   // Add role
 
