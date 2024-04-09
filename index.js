@@ -1,7 +1,7 @@
 const inquirer = require('inquirer');
 const queries = require('./queries');
 
-async function getQueries() {
+async function getChoices() {
   const departments = await queries.getAllDepartments();
   const roles = await queries.getAllRoles();
   const employees = await queries.getAllEmployees();
@@ -15,7 +15,7 @@ async function getQueries() {
 }
 
 async function promptQuestions() {
-  choices = await getQueries();
+  choices = await getChoices();
 
   const questions = [
     {
@@ -36,25 +36,25 @@ async function promptQuestions() {
 
     // Add employee
     {
+      when: (answers) => answers.question === 'Add employee',
       type: 'input',
       name: 'firstName',
-      when: (answers) => answers.question === 'Add an employee',
       message: "What is the employee's first name?",
     },
     {
+      when: (answers) => answers.question === 'Add employee',
       type: 'input',
       name: 'lastName',
-      when: (answers) => answers.question === 'Add an employee',
       message: "What is the employee's last name?",
     },
     {
+      when: (answers) => answers.question === 'Add employee',
       type: 'input',
       name: 'roleTitle',
-      when: (answers) => answers.question === 'Add an employee',
       message: "Enter the title of the employee's role:",
     },
     {
-      when: (answers) => answers.question === 'Add an employee',
+      when: (answers) => answers.question === 'Add employee',
       type: 'list',
       name: 'employeeManager',
       message: 'Select the manager of this employee',
@@ -63,14 +63,14 @@ async function promptQuestions() {
 
     // Update an employee's role
     {
-      when: (answers) => answers.question === "Update an employee's role",
+      when: (answers) => answers.question === 'Update employee role',
       type: 'list',
       name: 'employee',
       message: 'Select the employee to update the role',
       choices: choices.employeeList,
     },
     {
-      when: (answers) => answers.question === "Update an employee's role",
+      when: (answers) => answers.question === 'Update employee role',
       type: 'list',
       name: 'title',
       message: 'Select the new role',
@@ -79,15 +79,15 @@ async function promptQuestions() {
 
     //Add role
     {
+      when: (answers) => answers.question === 'Add role',
       type: 'input',
       name: 'newRoleTitle',
-      when: (answers) => answers.question === 'Add a role',
       message: 'What is the title of the new role?',
     },
     {
+      when: (answers) => answers.question === 'Add role',
       type: 'input',
       name: 'newRoleSalary',
-      when: (answers) => answers.question === 'Add a role',
       message: 'What is the salary for this role?',
       validate: (value) => {
         const valid = !isNaN(parseFloat(value));
@@ -95,7 +95,7 @@ async function promptQuestions() {
       },
     },
     {
-      when: (answers) => answers.question === 'Add a role',
+      when: (answers) => answers.question === 'Add role',
       type: 'list',
       name: 'roleDepartment',
       message: 'Select the department that this role belongs to',
@@ -104,17 +104,17 @@ async function promptQuestions() {
 
     //Add a department
     {
+      when: (answers) => answers.question === 'Add department',
       type: 'input',
       name: 'addDepartment',
-      when: (answers) => answers.question === 'Add a department',
       message: 'What is the name of the department?',
     },
 
     //quit
     {
+      when: (answers) => answers.question === 'Quit',
       type: 'confirm',
       name: 'confirmQuit',
-      when: (answers) => answers.question === 'Quit',
       message: 'Are you sure you want to quit?',
       default: false,
     },
