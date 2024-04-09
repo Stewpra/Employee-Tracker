@@ -1,11 +1,13 @@
-const express = require('express');
-const app = express();
-const port = 3001;
+const { Pool } = require('pg');
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+const pool = new Pool(
+  {
+    user: 'postgres',
+    password: 'password',
+    host: 'localhost',
+    database: 'employees_db',
+  },
+  console.log(`Connected to employees_db`)
+);
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+module.exports = pool;
