@@ -64,6 +64,24 @@ class queries {
     );
   }
   // Add employee
+  static async addEmployee(firstName, lastName, role, manager) {
+    const roleId = await this.executeQuery(
+      `SELECT id FROM role WHERE title = ($1);`,
+      [role]
+    );
+    let managerId = null;
+    if (manager) {
+      const [managerFirstName, managerLastName] = manager.split(' ');
+      managerId = await this.executeQuery(
+        `SELECT id FROM manager WHERE first_name = ($1) AND last_name = ($2);`,
+        [managerFirstName, managerLastName]
+      );
+    }
+    return this.executeQuery(
+      'INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ($1, $2, $3, $4);',
+      [firstName, lastName, roleId, managerId]
+    );
+  }
 
   // Update employee role
 }
