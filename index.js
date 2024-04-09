@@ -5,7 +5,7 @@ const queries = require('./queries');
 const questions = [
   {
     type: 'list',
-    name: 'welcome',
+    name: 'question',
     message: 'What would you like to do?',
     choices: [
       'View all employees', // GET
@@ -23,19 +23,19 @@ const questions = [
   {
     type: 'input',
     name: 'firstName',
-    when: (answers) => answers.welcome === 'Add an employee',
+    when: (answers) => answers.question === 'Add an employee',
     message: "What is the employee's first name?",
   },
   {
     type: 'input',
     name: 'lastName',
-    when: (answers) => answers.welcome === 'Add an employee',
+    when: (answers) => answers.question === 'Add an employee',
     message: "What is the employee's last name?",
   },
   {
     type: 'input',
     name: 'roleTitle',
-    when: (answers) => answers.welcome === 'Add an employee',
+    when: (answers) => answers.question === 'Add an employee',
     message: "Enter the title of the employee's role:",
   },
   {
@@ -50,13 +50,13 @@ const questions = [
   {
     type: 'input',
     name: 'newRoleTitle',
-    when: (answers) => answers.welcome === 'Add a role',
+    when: (answers) => answers.question === 'Add a role',
     message: 'What is the title of the new role?',
   },
   {
     type: 'input',
     name: 'newRoleSalary',
-    when: (answers) => answers.welcome === 'Add a role',
+    when: (answers) => answers.question === 'Add a role',
     message: 'What is the salary for this role?',
     validate: (value) => {
       const valid = !isNaN(parseFloat(value));
@@ -71,7 +71,7 @@ const questions = [
   {
     type: 'input',
     name: 'adddepartment',
-    when: (answers) => answers.welcome === 'Add a department',
+    when: (answers) => answers.question === 'Add a department',
     message: 'What is the name of the department?',
   },
 
@@ -79,7 +79,7 @@ const questions = [
   {
     type: 'confirm',
     name: 'confirmQuit',
-    when: (answers) => answers.welcome === 'Quit',
+    when: (answers) => answers.question === 'Quit',
     message: 'Are you sure you want to quit?',
     default: false,
   },
