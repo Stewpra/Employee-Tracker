@@ -53,7 +53,16 @@ class queries {
   }
 
   // Add role
-
+  static async addRole(title, salary, department) {
+    let departmentId = await this.executeQuery(
+      'SELECT id FROM department WHERE name = ($1);',
+      [department]
+    );
+    return this.executeQuery(
+      'INSERT INTO role (title, salary, department_id) VALUES ($1, $2, $3);',
+      [title, salary, departmentId]
+    );
+  }
   // Add employee
 
   // Update employee role
